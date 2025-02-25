@@ -37,7 +37,7 @@ public class CourseService {
         return courseobj.findById(id);
     }
 
-    //get data by course
+    //get data by category
     public Optional<Course> getCourseByCategory(String category)
     {
         return courseobj.findByCategory(category);
