@@ -19,8 +19,12 @@ import com.shree.springapp.entities.Tutorial;
 
 @Repository
 public interface TutorialRepo extends JpaRepository<Tutorial,Integer>{
+
+    
     @Modifying
     @Transactional
+
+    
     
     //post new data
     @Query(value="insert into Tutorial (course_id,video_url,upload_date,duration,transcript,resource_link) values(?,?,?,?,?,?)",nativeQuery = true)

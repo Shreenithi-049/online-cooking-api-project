@@ -17,8 +17,11 @@ import com.shree.springapp.entities.Course;
 
 @Repository
 public interface CourseRepo extends JpaRepository<Course,Integer>{
+
     @Modifying
     @Transactional
+
+   
     
     //post new data
     @Query(value="insert into Course (title,description,instructor_id,difficulty_level,category,price,is_live,schedule,duration,rating,total_enrolled,status) values(?,?,?,?,?,?,?,?,?,?,?,?)",nativeQuery = true)

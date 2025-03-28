@@ -2,12 +2,14 @@ package com.shree.springapp.entities;
 
 import java.util.Date;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity
@@ -22,6 +24,18 @@ public class Tutorial {
     private String duration;
     private String transcript;
     private String resource_link;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    @JsonBackReference
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
     public int getId() {
         return id;
     }
@@ -64,7 +78,7 @@ public class Tutorial {
     public void setResource_link(String resource_link) {
         this.resource_link = resource_link;
     } 
-    public Tutorial(int id,int course_id,String video_url,Date upload_date,String duration,String transcript,String resource_link)
+    public Tutorial(int id,int course_id,String video_url,Date upload_date,String duration,String transcript,String resource_link,User user)
     {
         this.id=id;
         this.course_id=course_id;
@@ -73,6 +87,7 @@ public class Tutorial {
         this.duration=duration;
         this.transcript=transcript;
         this.resource_link=resource_link;
+        this.user=user;
     }
     public Tutorial() {
     }

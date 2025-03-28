@@ -18,8 +18,11 @@ import com.shree.springapp.entities.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User,Integer>{
+
     @Modifying
     @Transactional
+
+    
     
     //post new data
     @Query(value="insert into User (name,email,password,phone,profilePicture,cookingInterest,role,regisDate,subpStatus,paymethod) values(?,?,?,?,?,?,?,?,?,?)",nativeQuery = true)

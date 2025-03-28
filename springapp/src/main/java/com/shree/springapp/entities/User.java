@@ -1,11 +1,19 @@
 package com.shree.springapp.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -22,6 +30,32 @@ public class User {
     private Date regisDate;
     private String subpStatus;
     private String paymethod;
+
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
+    @JsonManagedReference
+    List<Tutorial> tutorial=new ArrayList<>();
+    
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
+    @JsonManagedReference
+    List<Enrollment> enrollment=new ArrayList<>();
+
+    public void addEnrollment(Enrollment enrollments) {
+        enrollment.add(enrollments);
+        enrollments.setUser(this);
+    }
+
+    public List<Enrollment> getEnrollment() {
+        return enrollment;
+    }
+    public void setEnrollment(List<Enrollment> enrollment) {
+        this.enrollment = enrollment;
+    }
+    public List<Tutorial> getTutorial() {
+        return tutorial;
+    }
+    public void setTutorial(List<Tutorial> tutorial) {
+        this.tutorial = tutorial;
+    }
     public int getId() {
         return id;
     }
@@ -88,7 +122,7 @@ public class User {
     public void setPaymethod(String paymethod) {
         paymethod = paymethod;
     }
-    public User(int id,String name,String email,String password,int phone,String profilePicture,String cookingInterest,String role,Date regisDate,String subpStatus,String paymethod)
+    public User(int id,String name,String email,String password,int phone,String profilePicture,String cookingInterest,String role,Date regisDate,String subpStatus,String paymethod,List<Tutorial> tutorial,List<Enrollment> enrollment)
     {
         this.id=id;
         this.name=name;
@@ -101,6 +135,8 @@ public class User {
         this.regisDate=regisDate;
         this.subpStatus=subpStatus;
         this.paymethod=paymethod;
+        this.tutorial=tutorial;
+        this.enrollment=enrollment;
     }
     public User() {
     }

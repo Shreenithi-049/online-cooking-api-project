@@ -1,10 +1,16 @@
 package com.shree.springapp.entities;
 
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Course {
@@ -23,6 +29,18 @@ public class Course {
     private String rating;
     private int total_enrolled;
     private String status;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Enrollment> enrollments;
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
     public int getId() {
         return id;
     }
@@ -101,21 +119,21 @@ public class Course {
     public void setStatus(String status) {
         this.status = status;
     }
-    public Course(int id,String title,String description,int instructor_id,String difficulty_level,String category,double price,Boolean is_live,String schedule,String duration,String rating,int total_enrolled,String status)
-    {
-        this.id=id;
-        this.title=title;
-        this.description=description;
-        this.instructor_id=instructor_id;
-        this.difficulty_level=difficulty_level;
-        this.category=category;
-        this.price=price;
-        this.is_live=is_live;
-        this.schedule=schedule;
-        this.duration=duration;
-        this.rating=rating;
-        this.total_enrolled=total_enrolled;
-        this.status=status;
+    public Course(int id, String title, String description, int instructor_id, String difficulty_level, String category, double price, Boolean is_live, String schedule, String duration, String rating, int total_enrolled, String status,List<Enrollment> enrollments) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.instructor_id = instructor_id;
+        this.difficulty_level = difficulty_level;
+        this.category = category;
+        this.price = price;
+        this.is_live = is_live;
+        this.schedule = schedule;
+        this.duration = duration;
+        this.rating = rating;
+        this.total_enrolled = total_enrolled;
+        this.status = status;
+        this.enrollments=enrollments;
     }
     public Course() {
     }

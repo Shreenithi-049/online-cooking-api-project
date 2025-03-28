@@ -2,41 +2,48 @@ package com.shree.springapp.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int user_id;
-    private int course_id;
     private Date enrollment_date;
     private String payment_status;
     private String access_status;
     private String progress;
+
+    @ManyToOne
+    @JoinColumn(name="user_id",nullable = false)
+    @JsonBackReference
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public int getUser_id() {
-        return user_id;
-    }
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-    public int getCourse_id() {
-        return course_id;
-    }
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
-    }
+   
+   
     public Date getEnrollment_date() {
         return enrollment_date;
     }
@@ -61,18 +68,25 @@ public class Enrollment {
     public void setProgress(String progress) {
         this.progress = progress;
     }
-    public Enrollment(int id,int user_id,int course_id,Date enrollment_date,String payment_status,String access_status,String progress)
-    {
-        this.id=id;
-        this.user_id=user_id;
-        this.course_id=course_id;
-        this.enrollment_date=enrollment_date;
-        this.payment_status=payment_status;
-        this.access_status=access_status;
-        this.progress=progress;
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+    public Enrollment(int id, Date enrollment_date, String payment_status, String access_status, String progress, User user, Course course) {
+        this.id = id;
+        this.enrollment_date = enrollment_date;
+        this.payment_status = payment_status;
+        this.access_status = access_status;
+        this.progress = progress;
+        this.user = user;
+        this.course = course;
     }
     public Enrollment() {
     }
+    
 
 
 

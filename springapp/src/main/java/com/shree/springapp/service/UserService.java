@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.shree.springapp.entities.Enrollment;
+import com.shree.springapp.entities.Tutorial;
 import com.shree.springapp.entities.User;
 import com.shree.springapp.repository.UserRepo;
 
@@ -19,9 +22,14 @@ public class UserService {
     UserRepo obj;
 
     //post new data
-    public User createUser(User a)
-    {
-        return obj.save(a);
+    public User saveUser(User user) {
+        for (Tutorial tutorial : user.getTutorial()) {
+            tutorial.setUser(user); // Ensure bidirectional link
+        }
+         for (Enrollment enrollment : user.getEnrollment()) {
+        enrollment.setUser(user); // Ensure bidirectional link
+    }
+        return obj.save(user);
     }
 
     //get all data
